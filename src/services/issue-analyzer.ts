@@ -26,7 +26,7 @@ export class IssueAnalyzer {
 
   private extractKeywords(topics: SupportTopic[]): Array<{ keyword: string; frequency: number; percentage: number }> {
     const wordCounts = new Map<string, number>();
-    const totalWords = topics.length;
+    let totalWords = 0;
 
     topics.forEach(topic => {
       const text = `${topic.title} ${topic.description}`.toLowerCase();
@@ -35,6 +35,7 @@ export class IssueAnalyzer {
       words.forEach(word => {
         if (!this.commonStopWords.has(word)) {
           wordCounts.set(word, (wordCounts.get(word) || 0) + 1);
+          totalWords++;
         }
       });
     });
@@ -46,7 +47,7 @@ export class IssueAnalyzer {
       .map(([keyword, frequency]) => ({
         keyword,
         frequency,
-        percentage: Math.round((frequency / totalWords) * 100)
+        percentage: totalWords > 0 ? Math.round((frequency / totalWords) * 100) : 0
       }));
   }
 
