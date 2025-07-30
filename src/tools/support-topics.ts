@@ -50,7 +50,9 @@ export async function handleGetSupportTopics(args: unknown) {
       title: topic.title,
       link: topic.link,
       date: topic.pubDate,
-      description: topic.description?.substring(0, 200) + (topic.description?.length > 200 ? '...' : ''),
+      description: topic.description 
+        ? topic.description.substring(0, 200) + (topic.description.length > 200 ? '...' : '') 
+        : '',
       author: topic.author
     }));
 
