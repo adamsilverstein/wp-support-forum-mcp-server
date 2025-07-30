@@ -46,7 +46,10 @@ export async function handleGetPluginInfo(args: unknown) {
             },
             php_version: pluginInfo.requires_php,
             homepage: pluginInfo.homepage,
-            description: pluginInfo.description?.substring(0, 500) + '...',
+            description: pluginInfo.description ? 
+              (pluginInfo.description.length > 500 ? 
+                pluginInfo.description.substring(0, 500) + '...' : 
+                pluginInfo.description) : '',
             tags: Object.keys(pluginInfo.tags || {}).slice(0, 10)
           }, null, 2)
         }
