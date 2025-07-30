@@ -57,7 +57,7 @@ export async function handleAnalyzeTopIssues(args: unknown) {
       issue_categories: analysis.issueCategories.map(cat => ({
         category: cat.category,
         count: cat.count,
-        percentage: Math.round((cat.count / analysis.totalTopics) * 100),
+        percentage: analysis.totalTopics > 0 ? Math.round((cat.count / analysis.totalTopics) * 100) : 0,
         sample_topics: cat.topics.slice(0, 3).map(topic => ({
           title: topic.title,
           link: topic.link,

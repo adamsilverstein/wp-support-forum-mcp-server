@@ -5,7 +5,7 @@ import { WordPressAPIClient } from '../services/wordpress-api.js';
 const SearchPluginsSchema = z.object({
   query: z.string().describe('Search query for WordPress plugins'),
   page: z.number().optional().default(1).describe('Page number (default: 1)'),
-  per_page: z.number().optional().default(10).describe('Results per page (default: 10)')
+  per_page: z.number().min(1).max(100).optional().default(24).describe('Results per page (default: 24, max: 100)')
 });
 
 export const searchPluginsTool: Tool = {
@@ -25,9 +25,9 @@ export const searchPluginsTool: Tool = {
       },
       per_page: {
         type: 'number',
-        description: 'Results per page (default: 10)',
+        description: 'Results per page (default: 24, max: 100)',
         minimum: 1,
-        maximum: 50
+        maximum: 100
       }
     },
     required: ['query']
